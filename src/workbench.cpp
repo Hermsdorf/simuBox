@@ -13,6 +13,5 @@ layer &window::workbench()
 
 void window::add_element_to_workbench(int id, int x, int y, int w, int h, int r, int g, int b)
 {
-    //layers[0].newElement(id, x, y, w, h, r, g, b);
     workbench().newElement(id, x, y, w, h, r, g, b);
 }

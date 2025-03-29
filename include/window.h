@@ -27,12 +27,16 @@ class window
     SDL_Renderer* render = NULL;
 
     std::vector<layer> layers;
-
+    
     void show();
     void make_workbench_layer();
-    layer &workbench();
     void add_element_to_workbench(int id, int x, int y, int w, int h, int r, int g, int b);
+    layer &workbench();
 
+    void renderLayers();
+
+ 
+    
     private:
 
     int r, g, b;

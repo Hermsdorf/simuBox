@@ -55,6 +55,14 @@ void window::show()
 {
     SDL_SetRenderDrawColor(this->render, this->r, this->g, this->b, 255);
     SDL_RenderClear(this->render);
-    //this->renderLayers();
-    //SDL_RenderPresent(this->render);
+    this->renderLayers();
+    SDL_RenderPresent(this->render);
+}
+
+void window::renderLayers()
+{
+    for(long unsigned int i = 0; i < layers.size(); i++)
+    {
+        layers[i].render(this->render);
+    }
 }
