@@ -52,31 +52,31 @@ int main()
         std::cout << "Failed to load lazy font! SDL_ttf Error: " << TTF_GetError() << std::endl;
     }
     
-    window win("simuBox", 3, 6, 100, SCREEN_HEIGHT, SCREEN_WIDTH);
-
+    
     //SDL_Surface* surfaceText = TTF_RenderText_Solid(font, "Time: ", {255, 255, 255});
     //SDL_Texture* text = SDL_CreateTextureFromSurface(win.render, surfaceText);
-
+    
     //SDL_FreeSurface(surfaceText);
-
+    
     //setBackColor(3, 6, 100);
     //setColor(255, 255, 255);
+    
+    //std::cout << "X: " << win.layers[0].elements[0].rect.x<<std::endl;
+    //win.layers[0].newElement(0, 10, 10, 32, 32, 255, 255, 255);
 
-    std::vector<SDL_Rect*> rects;
-
-    SDL_Rect rect;
-    rect.x = SCREEN_HEIGHT/2;
-    rect.y = SCREEN_WIDTH/2;
-    rect.w = 32;
-    rect.h = 32;
-
-    SDL_Rect rect2;
-    rect2.x = 10;
-    rect2.y = 10;
-    rect2.w = 50;
-    rect2.h = 25;
-
-    SDL_RenderDrawRect(win.render, &rect);
+    
+    //SDL_Rect rect = win.layers[0].rect;
+    // rect.x = win.layers[0].elements[0].x;
+    // rect.y = win.layers[0].elements[0].y;
+    // rect.w = win.layers[0].elements[0].w;
+    // rect.h = win.layers[0].elements[0].h;
+    
+    
+    //SDL_RenderDrawRect(win.render, &win.layers[0].elements[0].rect); // desenha o retangulo pertencente a tela(também será substituído pelo metodo renderElements)
+    
+    window win("simuBox", 3, 6, 100, SCREEN_HEIGHT, SCREEN_WIDTH);
+    
+    win.add_element_to_workbench(0, 10, 10, 32, 32, 255, 255, 255);
 
     bool quit = false;
     SDL_Event e;
@@ -101,10 +101,10 @@ int main()
                 case SDL_MOUSEMOTION:
                     int x = e.motion.x;
                     int y = e.motion.y;
-                    if(x < SCREEN_WIDTH && y < SCREEN_HEIGHT && x > rect.w && y > rect.h)
+                    if(x < SCREEN_WIDTH && y < SCREEN_HEIGHT && x > win.layers[0].elements[0].rect.w && y > win.layers[0].elements[0].rect.h)
                     {
-                        rect.x = x - 32;
-                        rect.y = y - 32;
+                        win.layers[0].elements[0].rect.x = x - win.layers[0].elements[0].rect.w ;
+                        win.layers[0].elements[0].rect.y = y - win.layers[0].elements[0].rect.h;
                     }
                     break;
             }
@@ -115,11 +115,13 @@ int main()
         //SDL_SetRenderDrawColor(win.render, 3, 6, 100, 255); // seta a cor da tela desenha fundo da tela
         //SDL_RenderClear(win.render); // desenha o fundo da tela
         win.show();
-        SDL_SetRenderDrawColor(win.render, 255, 255, 255, 255); // seta a cor do retangulo presente na tela
-        SDL_RenderDrawRect(win.render, &rect); // desenha o retangulo pertencente a tela
+        SDL_SetRenderDrawColor(win.render, 255, 255, 255, 255); // seta a cor do retangulo presente na tela(será substituído pelo metodo renderElements)
+        SDL_RenderDrawRect(win.render, &win.layers[0].elements[0].rect); // desenha o retangulo pertencente a tela(também será substituído pelo metodo renderElements)
         //SDL_RenderCopy(atributos, text, NULL, &rect2);
-        SDL_RenderDrawRect(win.render, &rect);
-        SDL_RenderPresent(win.render);
+        //SDL_RenderDrawRect(win.render, &rect);
+        
+        SDL_RenderPresent(win.render); // quando a renderização das layers e seus elementos estiverem prontas,  talvez 
+                                       // dê para adicionar este comando no final do método show logo após a renderização das layers.
     }
 
     //SDL_DestroyTexture(text);

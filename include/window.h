@@ -3,6 +3,9 @@
 #include <iostream>
 #include <string>
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
+#include <vector>
+#include "layer.h"
 
 #define DEFAULT_SCREEN_WIDTH 640
 #define DEFAULT_SCREEN_HEIGHT 480
@@ -19,10 +22,16 @@ class window
     window(std::string win_name, int r, int g, int b, int height, int width);
     ~window();
 
-    void show();
-
+    
     SDL_Window* Window = NULL;
     SDL_Renderer* render = NULL;
+
+    std::vector<layer> layers;
+
+    void show();
+    void make_workbench_layer();
+    layer &workbench();
+    void add_element_to_workbench(int id, int x, int y, int w, int h, int r, int g, int b);
 
     private:
 

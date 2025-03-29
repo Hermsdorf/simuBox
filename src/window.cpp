@@ -1,6 +1,5 @@
 #include "window.h"
 
-
 window::window()
 {
     this->r = DEFAULT_R;
@@ -43,6 +42,7 @@ window::window(std::string win_name, int r, int g, int b, int height, int width)
     SDL_SetRenderDrawColor(this->render, r, g, b, 255);
     SDL_RenderClear(this->render);
     SDL_RenderPresent(this->render);
+    make_workbench_layer();
 }
 
 window::~window()
@@ -55,4 +55,6 @@ void window::show()
 {
     SDL_SetRenderDrawColor(this->render, this->r, this->g, this->b, 255);
     SDL_RenderClear(this->render);
+    //this->renderLayers();
+    //SDL_RenderPresent(this->render);
 }
