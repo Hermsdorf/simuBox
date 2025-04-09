@@ -5,10 +5,10 @@ window::window()
     this->r = DEFAULT_R;
     this->g = DEFAULT_G;
     this->b = DEFAULT_B;
-    this->height = DEFAULT_SCREEN_HEIGHT;
-    this->width = DEFAULT_SCREEN_WIDTH;
+    this->height = SCREEN_HEIGHT;
+    this->width = SCREEN_WIDTH;
     this->win_name = DEFAULT_NAME;
-    this->Window = SDL_CreateWindow(DEFAULT_NAME, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+    this->Window = SDL_CreateWindow(DEFAULT_NAME, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
     this->render = SDL_CreateRenderer(this->Window, -1, SDL_RENDERER_ACCELERATED);
     SDL_SetRenderDrawColor(this->render, DEFAULT_R, DEFAULT_G, DEFAULT_B, 255);
     SDL_RenderClear(this->render);
@@ -19,10 +19,10 @@ window::window(std::string win_name)
     this->r = DEFAULT_R;
     this->g = DEFAULT_G;
     this->b = DEFAULT_B;
-    this->height = DEFAULT_SCREEN_HEIGHT;
-    this->width = DEFAULT_SCREEN_WIDTH;
+    this->height = SCREEN_HEIGHT;
+    this->width = SCREEN_WIDTH;
     this->win_name = win_name;
-    this->Window = SDL_CreateWindow(win_name.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+    this->Window = SDL_CreateWindow(win_name.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
     this->render = SDL_CreateRenderer(this->Window, -1, SDL_RENDERER_ACCELERATED);
     SDL_SetRenderDrawColor(this->render, DEFAULT_R, DEFAULT_G, DEFAULT_B, 255);
     SDL_RenderClear(this->render);
@@ -43,6 +43,7 @@ window::window(std::string win_name, int r, int g, int b, int height, int width)
     SDL_RenderClear(this->render);
     SDL_RenderPresent(this->render);
     make_workbench_layer();
+    make_GUI_layer();
 }
 
 window::~window()
@@ -57,6 +58,11 @@ void window::show()
     SDL_RenderClear(this->render);
     this->renderLayers();
     SDL_RenderPresent(this->render);
+}
+
+void window::addLayer(layer l)
+{
+    layers.push_back(l);
 }
 
 void window::renderLayers()

@@ -7,8 +7,6 @@
 #include <vector>
 #include "layer.h"
 
-#define DEFAULT_SCREEN_WIDTH 640
-#define DEFAULT_SCREEN_HEIGHT 480
 #define DEFAULT_R 0
 #define DEFAULT_G 0
 #define DEFAULT_B 0
@@ -22,16 +20,29 @@ class window
     window(std::string win_name, int r, int g, int b, int height, int width);
     ~window();
 
+    static const int SCREEN_WIDTH = 640;
+    static const int SCREEN_HEIGHT = 480;
+
     
     SDL_Window* Window = NULL;
     SDL_Renderer* render = NULL;
+    SDL_TimerID timer;
 
     std::vector<layer> layers;
+
+    unsigned int t_ms = 0; 
     
     void show();
     void make_workbench_layer();
+    void make_GUI_layer();
     void add_element_to_workbench(int id, int x, int y, int w, int h, int r, int g, int b);
     layer &workbench();
+    layer &GUI();
+
+    
+    void refresh_workbench_elements();
+    void addLayer(layer l);
+    
 
     void renderLayers();
 
