@@ -42,7 +42,7 @@ window::window(std::string win_name, int r, int g, int b, int height, int width)
     SDL_SetRenderDrawColor(this->render, r, g, b, 255);
     SDL_RenderClear(this->render);
     SDL_RenderPresent(this->render);
-    make_workbench_layer();
+    make_default_layer();
     make_GUI_layer();
 }
 

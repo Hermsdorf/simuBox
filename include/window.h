@@ -33,11 +33,11 @@ class window
     unsigned int t_ms = 0; 
     
     void show();
-    void make_workbench_layer();
+    void make_default_layer();
     void make_GUI_layer();
-    void add_element_to_workbench(int id, int x, int y, int w, int h, int r, int g, int b);
+    void add_element_to_workbench(int id, int x, int y, int w, int h, SDL_Color c);
     layer &workbench();
-    layer &GUI();
+    layer &GUI(){return layers[1];}
 
     
     void refresh_workbench_elements();

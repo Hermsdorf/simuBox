@@ -1,6 +1,7 @@
 #ifndef ELEMENT_H
 #define ELEMENT_H
-#define RECTANGLE 0
+#define RECTANGLE_DRAW 0
+#define RECTANGLE_FILL 1
 
 
 #include <iostream>
@@ -13,8 +14,10 @@ class element
 {
 public:
     element();
-    element(int id, int x, int y, int w, int h, int r, int g, int b);
+    element(int id, int x, int y, int w, int h, SDL_Color color);
     ~element();
+
+    int& Type() { return type; }
 
     int type;
     int id;
@@ -22,7 +25,7 @@ public:
     int y;
     int w;
     int h;
-    int color[3];
+    SDL_Color color;
 
     SDL_Rect rect;
 

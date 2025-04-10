@@ -35,9 +35,7 @@ int main()
     window win("simuBox", 3, 6, 100, SCREEN_HEIGHT, SCREEN_WIDTH);
 
     
-    int w_in = SCREEN_WIDTH - 7;
-    int h_in = SCREEN_HEIGHT / 5 - 6;
-    win.add_element_to_workbench(0, 10, 10, 32, 32, 255, 255, 255);
+    win.add_element_to_workbench(0, 10, 10, 32, 32, {255, 255, 255});
 
     bool quit = false;
     SDL_Event e;

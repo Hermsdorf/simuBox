@@ -8,10 +8,14 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 
+#define SMALL_FONT 0
+#define MEDIUM_FONT 1
+#define LARGE_FONT 2
+
 class text_element
 {
     public:
-    text_element(int id, int x, int y, int w, int h, SDL_Color color, std::string s);
+    text_element(int id, int x, int y, int w, int h, SDL_Color color, std::string text, int size);
     text_element();
     ~text_element(){}
 
@@ -20,6 +24,7 @@ class text_element
     int y;
     int w;
     int h;
+    int size;
     SDL_Color color;
     std::string text;
 
