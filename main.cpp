@@ -2,13 +2,15 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 #include <vector>
-
+#include <cmath>
 #include "./include/window.h"
+#include "./include/timer.h"
 
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
 
 typedef unsigned char uint8;
+std::string getTimeString(Uint32 time);
 
 int main()
 {
@@ -31,17 +33,49 @@ int main()
         std::cout << "SDL_ttf initialized successfully!" << std::endl;
     }
 
-    
+    Timer timer(1000);
+    std::string timeString;
+    timer.start();
+    std::cout << "Timer started!" << std::endl;
     window win("simuBox", 3, 6, 100, SCREEN_HEIGHT, SCREEN_WIDTH);
 
+    int x0 = 0;
+    int y0 = SCREEN_HEIGHT - (SCREEN_HEIGHT / 5) - 50;
+    double a = 9.81 * SCREEN_HEIGHT / 10000000;
+    double v = 0;
+    double massa = 10;
+    double h = 100;
+
     
-    win.add_element_to_workbench(0, 10, 10, 32, 32, {255, 255, 255});
+    win.add_element_to_workbench(0,0, SCREEN_WIDTH/2, h, 32, 32, {255, 255, 255});
+    //chão
+    
+    win.add_element_to_workbench(2,1,x0,y0, SCREEN_WIDTH, y0, {255, 255, 255});
+
+    
+
+    
 
     bool quit = false;
     SDL_Event e;
 
     while (!quit)
     {
+        // Atualiza o tempo total do timer
+        timeString = getTimeString(timer.getTotalTime());
+        win.GUI().setTextElementString(6, "Time: " + timeString);
+
+
+        if(h<y0)
+        {
+            std::cout << "h: " << h << std::endl;
+            v = v + a * (timer.getTotalTime() / 1000);
+            h = h + v*(timer.getTotalTime()/1000);
+            win.layers[0].elements[0].rect.y = h - win.layers[0].elements[0].rect.h;
+        }
+        
+        
+
         while (SDL_PollEvent(&e) != 0)
         {
             switch (e.type)
@@ -57,15 +91,15 @@ int main()
                     break;
                 }
                 break;
-            case SDL_MOUSEMOTION:
-                int x = e.motion.x;
-                int y = e.motion.y;
-                if (x < SCREEN_WIDTH && y < SCREEN_HEIGHT && x > win.layers[0].elements[0].rect.w && y > win.layers[0].elements[0].rect.h)
-                {
-                    win.layers[0].elements[0].rect.x = x - win.layers[0].elements[0].rect.w;
-                    win.layers[0].elements[0].rect.y = y - win.layers[0].elements[0].rect.h;
-                }
-                break;
+            // case SDL_MOUSEMOTION:
+            //     int x = e.motion.x;
+            //     int y = e.motion.y;
+            //     if (x < SCREEN_WIDTH && y < SCREEN_HEIGHT && x > win.layers[0].elements[0].rect.w && y > win.layers[0].elements[0].rect.h)
+            //     {
+            //         win.layers[0].elements[0].rect.x = x - win.layers[0].elements[0].rect.w;
+            //         win.layers[0].elements[0].rect.y = y - win.layers[0].elements[0].rect.h;
+            //     }
+            //     break;
             }
         }
 
@@ -76,36 +110,32 @@ int main()
     SDL_Quit();
 }
 
-// setBackColor(3, 6, 100);
-// setColor(255, 255, 255);
+std::string getTimeString(Uint32 time)
+{
+    Uint32 miliseconds = time/10;// :00
+    Uint32 seconds = time / 1000; // :00
+    Uint32 minutes = seconds / 60; // :00
+    Uint32 hours = minutes / 60; // :00
 
-// std::cout << "X: " << win.layers[0].elements[0].rect.x<<std::endl;
-// win.layers[0].newElement(0, 10, 10, 32, 32, 255, 255, 255);
+    miliseconds = miliseconds % 100; // :00
+    seconds = seconds % 60; // :00
+    minutes = minutes % 60; // :00
 
-// SDL_Rect rect = win.layers[0].rect;
-//  rect.x = win.layers[0].elements[0].x;
-//  rect.y = win.layers[0].elements[0].y;
-//  rect.w = win.layers[0].elements[0].w;
-//  rect.h = win.layers[0].elements[0].h;
+    std::string milisecondsString;
+    std::string secondsString;
+    std::string minutesString;
+    std::string hoursString;
 
-// SDL_RenderDrawRect(win.render, &win.layers[0].elements[0].rect); // desenha o retangulo pertencente a tela(também será substituído pelo metodo renderElements)
+    if (miliseconds > 1000)
+    {
+        miliseconds = 0;
+    }
+    miliseconds < 10 ? milisecondsString = "0" + std::to_string(miliseconds) : milisecondsString = std::to_string(miliseconds);
+    seconds < 10 ? secondsString = "0" + std::to_string(seconds) : secondsString = std::to_string(seconds);
+    minutes < 10 ? minutesString = "0" + std::to_string(minutes) : minutesString = std::to_string(minutes);
+    hours < 10 ? hoursString = "0" + std::to_string(hours) : hoursString = std::to_string(hours);
+    
+    std::string timeString = hoursString + ":" + minutesString + ":" + secondsString + ":" + milisecondsString;
+    return timeString;
 
-// setBackColor(3, 6, 100);
-// setColor(255, 255, 255);
-// SDL_SetRenderDrawColor(win.render, 3, 6, 100, 255); // seta a cor da tela desenha fundo da tela
-// SDL_RenderClear(win.render); // desenha o fundo da tela
-
-// SDL_DestroyTexture(text);
-// SDL_DestroyRenderer(atributos);
-// SDL_DestroyWindow(window);
-
-// SDL_RenderCopy(atributos, text, NULL, &rect2);
-// SDL_RenderDrawRect(win.render, &rect);
-
-// SDL_SetRenderDrawColor(win.render, 255, 255, 255, 255); // seta a cor do retangulo presente na tela(será substituído pelo metodo renderElements)
-// SDL_RenderDrawRect(win.render, &win.layers[0].elements[0].rect); // desenha o retangulo pertencente a tela(também será substituído pelo metodo renderElements)
-
-// SDL_RenderPresent(win.render); // quando a renderização das layers e seus elementos estiverem prontas,  talvez
-//  dê para adicionar este comando no final do método show logo após a renderização das layers.
-
-// TTF_CloseFont(font);
+}

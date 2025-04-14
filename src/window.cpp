@@ -67,8 +67,10 @@ void window::addLayer(layer l)
 
 void window::renderLayers()
 {
-    for(long unsigned int i = 0; i < layers.size(); i++)
+    for (long unsigned int i = 0; i < layers.size(); i++)
     {
         layers[i].render(this->render);
     }
 }
+
+

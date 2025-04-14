@@ -20,16 +20,18 @@ layer::~layer()
 {
 }
 
-void layer::newElement(int id, int x, int y, int w, int h, SDL_Color color)
+void layer::newElement(int type, int x, int y, int w, int h, SDL_Color color)
 {
-    element e(id, x, y, w, h, color);
+    element e(elements.size(), x, y, w, h, color);
+    e.setHoverColor(e.color);
+    e.type = type;
     elements.push_back(e);
 }
 
-void layer::newTextElement(int id, int x, int y, int w, int h, SDL_Color color, std::string s, int size)
+void layer::newTextElement(int x, int y, int w, int h, SDL_Color color, std::string s, int size)
 {
 
-    text_element e(id, x, y, w, h, color, s, size);
+    text_element e(text.size(), x, y, w, h, color, s, size);
     text.push_back(e);
 }
 
@@ -38,7 +40,7 @@ void layer::render(SDL_Renderer *render)
     // Renderização dos elementos
     for (long unsigned int i = 0; i < elements.size(); i++)
     {
-        SDL_SetRenderDrawColor(render, elements[i].color.r, elements[i].color.g, elements[i].color.b, 255);
+        SDL_SetRenderDrawColor(render, elements[i].getCurrentColor().r, elements[i].getCurrentColor().g, elements[i].getCurrentColor().b, 255);
         if (elements[i].type == RECTANGLE_FILL)
         {
             SDL_RenderFillRect(render, &elements[i].rect);
@@ -46,6 +48,10 @@ void layer::render(SDL_Renderer *render)
         else if (elements[i].type == RECTANGLE_DRAW)
         {
             SDL_RenderDrawRect(render, &elements[i].rect);
+        }
+        else if (elements[i].type == LINE_DRAW)
+        {
+            SDL_RenderDrawLine(render, elements[i].x, elements[i].y, elements[i].w, elements[i].h); //x = x1, y= y1, w = x2, h = y2
         }
     }
 
@@ -72,14 +78,15 @@ void layer::render(SDL_Renderer *render)
         static bool alreadyPrinted = false;
         if (!alreadyPrinted)
         {
-            std::cout << std::endl <<   "DEBUG"    << std::endl;
+            std::cout << std::endl
+                      << "DEBUG" << std::endl;
 
-            std::cout << "Text: "  << text[i].text << std::endl
-                      << "Size: "  << text[i].size << std::endl
-                      << "X: "     << text[i].x    << std::endl
-                      << "Y: "     << text[i].y    << std::endl
-                      << "W: "     << dstrect.w   << std::endl
-                      << "H: "     << dstrect.h    << std::endl
+            std::cout << "Text: " << text[i].text << std::endl
+                      << "Size: " << text[i].size << std::endl
+                      << "X: " << text[i].x << std::endl
+                      << "Y: " << text[i].y << std::endl
+                      << "W: " << dstrect.w << std::endl
+                      << "H: " << dstrect.h << std::endl
                       << "Color: " << (int)text[i].color.r << " " << (int)text[i].color.g << " " << (int)text[i].color.b << std::endl;
             alreadyPrinted = true;
         }
@@ -90,3 +97,4 @@ void layer::render(SDL_Renderer *render)
         SDL_DestroyTexture(textureText);
     }
 }
+

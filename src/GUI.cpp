@@ -10,20 +10,29 @@ void window::make_default_layer()
 
 void window::make_GUI_layer()
 {
+    int x0 = 0;
+    int y0 = SCREEN_HEIGHT - (SCREEN_HEIGHT / 5);
     int x0_in = 4;
     int y0_in = SCREEN_HEIGHT - (SCREEN_HEIGHT / 5) + 3;
     
     SDL_Color font_color = {3, 6, 100};
-    GUI().newElement(0, 1, (SCREEN_HEIGHT - (SCREEN_HEIGHT / 5)), SCREEN_WIDTH - 1, SCREEN_HEIGHT / 5, {168,168,168});
-    GUI().newElement(1, 4, (SCREEN_HEIGHT - (SCREEN_HEIGHT / 5)) + 3, SCREEN_WIDTH - 7, SCREEN_HEIGHT / 5 - 6, {168,168,168});
-    GUI().setElementType(1, RECTANGLE_FILL);
-    GUI().newElement(2,10, y0_in - 15, 55, 21, {3, 6, 100});
-    GUI().setElementType(2, RECTANGLE_FILL);
-    GUI().newTextElement(1, x0_in +10 , y0_in + 7.5+20, 32, 15, font_color , "Text1",1);
-    GUI().newTextElement(2, x0_in +10 , y0_in + 7.5+40, 32, 15, font_color , "Text3",1);
-    GUI().newTextElement(3, x0_in +10 , y0_in + 7.5+60, 32, 15, font_color , "Text4",1);
-    GUI().newTextElement(4, 17 , y0_in -15, 32, 15, {168,168,168} , "infos",1);
+    GUI().newElement(RECTANGLE_FILL,1, (SCREEN_HEIGHT - (SCREEN_HEIGHT / 5)), SCREEN_WIDTH - 1, SCREEN_HEIGHT / 5, {168,168,168});
+    GUI().newElement(RECTANGLE_DRAW,4, (SCREEN_HEIGHT - (SCREEN_HEIGHT / 5)) + 3, SCREEN_WIDTH - 7, SCREEN_HEIGHT / 5 - 6, {3, 6, 100});
+    GUI().newElement(RECTANGLE_DRAW,6, (SCREEN_HEIGHT - (SCREEN_HEIGHT / 5)) + 5, SCREEN_WIDTH - 11, SCREEN_HEIGHT / 5 - 10, {3, 6, 100});
 
+    GUI().newElement(RECTANGLE_FILL,20, y0, 55, 21, {3, 6, 100});
+    GUI().newTextElement(25 , y0, 32, 15, {168,168,168} , "INFOS",1);
+    
+    
+    GUI().newTextElement(25 , y0+30, 32, 15, {3, 6, 100} , "m  = 10kg",0);
+    GUI().newTextElement(25 , y0+45, 32, 15, {3, 6, 100} , "v0 = 10m/s",0);
+    GUI().newTextElement(25 , y0+60, 32, 15, {3, 6, 100} , "a  = 10m/s",0);
+    
+    GUI().newTextElement(125 , y0+30, 32, 15, {3, 6, 100} , "G = 10m/s",0);
+    GUI().newTextElement(125 , y0+45, 32, 15, {3, 6, 100} , "u = 0.015",0);
+    GUI().newTextElement(125 , y0+60, 32, 15, {3, 6, 100} , "Time: 00:00:00",0);
+   
+    
 
 
     //layers.push_back(l);
@@ -34,9 +43,8 @@ layer &window::workbench()
     return layers[0];
 }
 
-void window::add_element_to_workbench(int id, int x, int y, int w, int h, SDL_Color c)
+void window::add_element_to_workbench(int type, int id, int x, int y, int w, int h, SDL_Color c)
 {
-    
-    workbench().newElement(id, x, y, w, h, c);
+    workbench().newElement(type,x, y, w, h, c);
 }
 

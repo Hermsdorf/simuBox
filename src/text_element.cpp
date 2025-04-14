@@ -10,5 +10,6 @@ text_element::text_element(int id, int x, int y, int w, int h, SDL_Color color, 
     this->color = color;
     this->text =text;
     this->size = size;
+    
 
 }

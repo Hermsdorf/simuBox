@@ -35,7 +35,7 @@ class window
     void show();
     void make_default_layer();
     void make_GUI_layer();
-    void add_element_to_workbench(int id, int x, int y, int w, int h, SDL_Color c);
+    void add_element_to_workbench(int type, int id, int x, int y, int w, int h, SDL_Color c);
     layer &workbench();
     layer &GUI(){return layers[1];}
 
