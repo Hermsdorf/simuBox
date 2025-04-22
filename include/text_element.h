@@ -2,7 +2,6 @@
 #define TEXT_ELEMENT_H
 
 #include <iostream>
-#include <vector>
 #include <string>
 
 #include <SDL2/SDL.h>

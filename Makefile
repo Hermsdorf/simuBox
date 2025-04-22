@@ -16,6 +16,8 @@ LIBRARIES = -lSDL2 -lSDL2_ttf
 # Flags padrão
 CXXFLAGS = -Wall -std=c++17
 
+CXXRFLAGS = -std=c++17
+
 # Flags de DEBUG (define a macro DEBUG e inclui símbolos)
 DEBUG_FLAGS = -g -O0 -DDEBUG
 
@@ -28,11 +30,11 @@ RELEASE_FLAGS = -O3
 all: release
 
 # Compilação em modo release (otimizado)
-release: CXXFLAGS += $(RELEASE_FLAGS)
+release: CXXRFLAGS += $(RELEASE_FLAGS)
 release:
 	@echo "--------------------------------------"
 	@echo "Compilando simuBox em modo RELEASE"
-	@$(CXX) $(CXXFLAGS) -o $(EXECUTABLE) $(SOURCES) $(INCLUDES) $(LIBRARIES)
+	@$(CXX) $(CXXRFLAGS) -o $(EXECUTABLE) $(SOURCES) $(INCLUDES) $(LIBRARIES)
 
 
 # Compilação em modo debug (com símbolos e macros DEBUG)

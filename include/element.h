@@ -4,9 +4,6 @@
 #define RECTANGLE_FILL 1
 #define LINE_DRAW 2
 
-#include <iostream>
-#include <vector>
-
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 

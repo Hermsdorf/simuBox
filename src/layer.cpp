@@ -55,6 +55,12 @@ void layer::render(SDL_Renderer *render)
         }
     }
 
+    // Renderização dos elementos físicos
+    for(long unsigned int i = 0; i < physical_elements.size(); i++)
+    {
+        
+    }
+
     for (long unsigned int i = 0; i < text.size(); i++)
     {
         if (text[i].size == SMALL_FONT)

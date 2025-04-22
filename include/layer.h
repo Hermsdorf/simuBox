@@ -3,6 +3,7 @@
 
 #include <functional>
 #include "element.h"
+#include "physical_element.h"
 #include "text_element.h"
 #include "timer.h"
 
@@ -28,6 +29,7 @@ class layer
     TTF_Font *font;
 
     std::vector<element> elements;
+    std::vector<physical_element> physical_elements;
     std::vector<text_element> text;
 
 
